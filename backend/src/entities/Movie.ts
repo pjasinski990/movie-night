@@ -7,13 +7,19 @@ export class Movie {
     id!: number;
 
     @Column()
+    year!: number;
+
+    @Column()
     title!: string;
 
-    @Column({ nullable: true })
+    @Column({nullable: true})
     description!: string;
 
-    @Column({ nullable: true })
+    @Column({nullable: true})
     duration!: number;
+
+    @Column({ nullable: true })
+    posterUrl!: string;
 
     @OneToMany(() => Showtime, (showtime) => showtime.movie)
     showtimes!: Showtime[];

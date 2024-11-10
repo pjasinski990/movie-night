@@ -1,14 +1,44 @@
-import './App.css'
+import React from 'react';
+import './styles/App.css'
+import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
+import { MoviePage } from './components/MoviePage.tsx';
+import { Showtimes } from './components/Showtimes';
+import { Bookings } from './components/Bookings';
+import { Flip, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function App() {
-  return (
-    <>
+const App: React.FC = () => {
+    return (
         <div>
-            <iframe src="https://giphy.com/embed/22kxQ12cxyEww" width="480" height="480"
-                    className="giphy-embed" allowFullScreen></iframe>
-            <p><a href="https://giphy.com/gifs/22kxQ12cxyEww"></a></p></div>
-    </>
-  )
-}
+            <Router>
+                <nav className="nav-style">
+                    <Link to="/" className="mr-4">
+                        Movies
+                    </Link>
+                    <Link to="/showtimes" className="mr-4">
+                        Showtimes
+                    </Link>
+                    <Link to="/bookings">Bookings</Link>
+                </nav>
+                <div className={'page-bg'}>
+                    <Routes>
+                        <Route path="/" element={<MoviePage/>}/>
+                        <Route path="/showtimes" element={<Showtimes/>}/>
+                        <Route path="/bookings" element={<Bookings/>}/>
+                    </Routes>
+                </div>
+            </Router>
+            <ToastContainer
+                className={'toast-container'}
+                autoClose={2000}
+                closeOnClick={true}
+                transition={Flip}
+                pauseOnFocusLoss={false}
+                pauseOnHover={false}
+                theme={'dark'}
+            />
+        </div>
+    );
+};
 
-export default App
+export default App;
