@@ -1,4 +1,5 @@
 import { Movie } from "./models/movie.ts";
+import { Showtime } from "./models/showtime.ts";
 
 export async function getMovies(): Promise<Movie[]> {
     return await fetch('/api/movies')
@@ -30,4 +31,15 @@ export async function deleteMovie(movieId: number): Promise<Movie> {
         throw new Error(res.statusText);
     }
     return await res.json();
+}
+
+export async function getShowtimes(): Promise<Showtime[]> {
+    return await fetch('/api/showtimes')
+        .then((res) => res.json())
+        .then((data) => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        });
 }

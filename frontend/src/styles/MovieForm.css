@@ -10,6 +10,10 @@
     @apply w-full mb-4 p-3 rounded-sm bg-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-mikado_yellow-800;
 }
 
+.movie-form-dropzone {
+    @apply cursor-pointer flex items-center justify-center text-center rounded-sm border-2 border-dashed border-gold-800 transition-colors duration-150 ease-in-out hover:border-gold;
+}
+
 .movie-form-submit-button {
     @apply bg-gold-400 text-white py-2 px-4 rounded-sm hover:bg-mikado_yellow-500 transition-colors font-semibold;
 }

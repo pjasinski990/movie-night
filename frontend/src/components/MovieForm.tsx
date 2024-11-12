@@ -6,11 +6,21 @@ import { ChevronDown } from "lucide-react";
 import { Movie } from "../lib/models/movie.ts";
 import { useDropzone } from "react-dropzone";
 
+const dropzoneAcceptedFiles = {
+    'image/png': ['.png'],
+    'image/jpeg': ['.jpg', '.jpeg'],
+    'image/gif': ['.gif'],
+    'image/webp': ['.webp'],
+    'image/svg+xml': ['.svg'],
+    'image/bmp': ['.bmp'],
+    'image/tiff': ['.tif', '.tiff']
+};
+
 export const MovieForm: React.FC = () => {
     const [title, setTitle] = useState('');
-    const [year, setYear] = useState<number|undefined>(undefined);
+    const [year, setYear] = useState<number | undefined>(undefined);
     const [description, setDescription] = useState('');
-    const [duration, setDuration] = useState<number|undefined>(undefined);
+    const [duration, setDuration] = useState<number | undefined>(undefined);
     const [posterUrl, setPosterUrl] = useState('');
 
     const [folded, setFolded] = useState(true);
@@ -30,19 +40,31 @@ export const MovieForm: React.FC = () => {
             const data = await response.json();
             setPosterUrl(data.url);
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            toast.error('Failed to upload poster');
         }
     };
-    const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
-    const handleAddMovie = (newMovie: Movie) => {
+    const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: dropzoneAcceptedFiles, multiple: false });
+
+    const clearForm = () => {
+        setTitle('');
+        setYear(undefined);
+        setDescription('');
+        setDuration(undefined);
+        setPosterUrl('');
+    };
+
+    const handleAddMovie = async (newMovie: Movie) => {
         try {
-            validateMovie(newMovie)
-            postMovie(newMovie)
-                .then(res => setMovies([...movies, res]))
-                .catch(err => console.log(err));
+            validateMovie(newMovie);
+            const res = await postMovie(newMovie);
+            setMovies([...movies, res]);
             toast.success('Movie added successfully');
-        } catch (error) {
+            clearForm();
+            setFolded(true);
+        } catch (error: any) {
+            console.error('Failed to add movie:', error);
             toast.error(`${error}`);
         }
     };
@@ -61,7 +83,7 @@ export const MovieForm: React.FC = () => {
             <div className={`transition-height duration-300 ${folded ? 'max-h-0 overflow-hidden' : 'max-h-screen'}`}>
                 <div className="p-4 pt-0 flex flex-col space-y-4">
                     <div className="flex flex-row items-stretch space-x-3">
-                        <div className="flex-grow">
+                        <div className="flex-grow mt-2">
                             <input
                                 type="text"
                                 placeholder="Title"
@@ -72,10 +94,20 @@ export const MovieForm: React.FC = () => {
                             <input
                                 type="number"
                                 placeholder="Year of production"
-                                value={year}
+                                value={year ?? ''}
                                 inputMode={'numeric'}
+                                step="1"
+                                min="1888"
                                 onChange={e => {
-                                    setYear(parseInt(e.target.value))
+                                    const value = e.target.value;
+                                    if (value === '') {
+                                        setYear(undefined);
+                                    } else {
+                                        const parsed = parseInt(value, 10);
+                                        if (!isNaN(parsed)) {
+                                            setYear(parsed);
+                                        }
+                                    }
                                 }}
                                 className="movie-form-input w-full mt-2"
                             />
@@ -89,15 +121,27 @@ export const MovieForm: React.FC = () => {
                             <input
                                 type="number"
                                 placeholder="Duration (minutes)"
-                                value={duration}
+                                value={duration ?? ''}
                                 inputMode={'numeric'}
-                                onChange={e => setDuration(parseInt(e.target.value))}
+                                step="1"
+                                min="1"
+                                onChange={e => {
+                                    const value = e.target.value;
+                                    if (value === '') {
+                                        setDuration(undefined);
+                                    } else {
+                                        const parsed = parseInt(value, 10);
+                                        if (!isNaN(parsed)) {
+                                            setDuration(parsed);
+                                        }
+                                    }
+                                }}
                                 className="movie-form-input w-full mt-2"
                             />
                         </div>
                         <div
                             {...getRootProps()}
-                            className="m-4 mt-2 p-2 dropzone cursor-pointer max-w-[20%] flex border-2 border-dashed rounded"
+                            className="m-4 p-2 dropzone movie-form-dropzone max-w-[20%]"
                         >
                             <input {...getInputProps()} />
                             {posterUrl ? (
@@ -113,14 +157,14 @@ export const MovieForm: React.FC = () => {
                     </div>
                     <button
                         onClick={() => {
-                            const newMovie = {
+                            const newMovie: Movie = {
                                 title,
                                 year,
                                 description,
                                 duration,
                                 posterUrl,
-                            }
-                            handleAddMovie(newMovie)
+                            };
+                            handleAddMovie(newMovie).then();
                         }}
                         className="movie-form-submit-button w-full"
                     >
@@ -134,15 +178,12 @@ export const MovieForm: React.FC = () => {
 
 function validateMovie(newMovie: Movie) {
     if (!newMovie.title) {
-        throw ('Movie requires title')
-    }
-    else if (!newMovie.year) {
-        throw ('Movie requires year of production')
-    }
-    if (!newMovie.duration) {
-        throw ('Movie requires duration')
-    }
-    else if (!newMovie.posterUrl) {
-        throw ('Movie requires a poster')
+        throw ('Movie requires the title');
+    } else if (!newMovie.year) {
+        throw ('Movie requires the year of production');
+    } else if (!newMovie.duration) {
+        throw ('Movie requires the duration');
+    } else if (!newMovie.posterUrl) {
+        throw ('Movie requires the poster');
     }
 }
