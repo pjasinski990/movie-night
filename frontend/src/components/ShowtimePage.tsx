@@ -1,21 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { MovieCard } from "./MovieCard.tsx";
-import { MovieForm } from "./MovieForm.tsx";
-
-interface Showtime {
-    id: number;
-    movieId: number;
-    time: string;
-}
+import React from 'react';
+import { useShowtimes } from "../context/ShowtimeContext.tsx";
 
 export const ShowtimePage: React.FC = () => {
-    const [showtimes, setShowtimes] = useState<Showtime[]>([]);
-
-    useEffect(() => {
-        fetch('/api/showtimes')
-            .then((res) => res.json())
-            .then((data) => setShowtimes(data));
-    }, []);
+    const { showtimes, setShowtimes, isLoading } = useShowtimes();
 
     return (
         <div className="content-card">
@@ -24,14 +11,13 @@ export const ShowtimePage: React.FC = () => {
                 <p className={'text-white'}>Loading movies...</p>
             ) : (
                 <ul className="flex flex-col gap-6">
-                    {movies.map((movie) => (
-                        <li key={movie.id} className="w-full">
-                            <MovieCard movie={movie} onDelete={handleDeleteMovie}/>
+                    {showtimes.map((showtime) => (
+                        <li key={showtime.id} className="w-full">
+                            <p>{showtime.movie.title} {showtime.show_date.toISOString()}</p>
                         </li>
                     ))}
                 </ul>
             )}
-            <MovieForm/>
         </div>
     );
 };

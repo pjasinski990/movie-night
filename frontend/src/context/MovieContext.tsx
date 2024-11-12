@@ -40,7 +40,7 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 export const useMovies = () => {
     const context = useContext(MovieContext);
     if (context === undefined) {
-        throw new Error('useMovies must be used within an MovieProvider');
+        throw new Error('useMovies must be used within a MovieProvider');
     }
     return context;
 };

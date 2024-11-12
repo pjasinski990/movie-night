@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { getMovies } from "../lib/backendService.ts";
 import { Showtime } from "../lib/models/showtime.ts";
+import { getShowtimes } from "../lib/backendService.ts";
 
 export interface ShowtimeContextType {
     showtimes: Showtime[];
@@ -25,22 +25,22 @@ export const ShowtimeProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }, []);
 
     return (
-        <MovieContext.Provider
+        <ShowtimeContext.Provider
             value={{
-                movies,
-                setMovies,
+                showtimes,
+                setShowtimes,
                 isLoading,
             }}
         >
             {children}
-        </MovieContext.Provider>
+        </ShowtimeContext.Provider>
     );
 };
 
-export const useMovies = () => {
-    const context = useContext(MovieContext);
+export const useShowtimes = () => {
+    const context = useContext(ShowtimeContext);
     if (context === undefined) {
-        throw new Error('useMovies must be used within an MovieProvider');
+        throw new Error('useShowtimes must be used within a ShowtimeContext');
     }
     return context;
 };

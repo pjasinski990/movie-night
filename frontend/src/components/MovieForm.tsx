@@ -18,9 +18,9 @@ const dropzoneAcceptedFiles = {
 
 export const MovieForm: React.FC = () => {
     const [title, setTitle] = useState('');
-    const [year, setYear] = useState<number | undefined>(undefined);
+    const [year, setYear] = useState('');
     const [description, setDescription] = useState('');
-    const [duration, setDuration] = useState<number | undefined>(undefined);
+    const [duration, setDuration] = useState('');
     const [posterUrl, setPosterUrl] = useState('');
 
     const [folded, setFolded] = useState(true);
@@ -49,9 +49,9 @@ export const MovieForm: React.FC = () => {
 
     const clearForm = () => {
         setTitle('');
-        setYear(undefined);
+        setYear('');
         setDescription('');
-        setDuration(undefined);
+        setDuration('');
         setPosterUrl('');
     };
 
@@ -75,7 +75,7 @@ export const MovieForm: React.FC = () => {
                 className={`movie-form-heading ${folded ? 'py-2' : 'py-4'}`}
                 onClick={() => setFolded(!folded)}
             >
-                <h2 className={`text-xl font-semibold text-white`}>Add a New Movie</h2>
+                <h2 className={`text-xl font-semibold text-white`}>I have a better idea...</h2>
                 <ChevronDown
                     className={`w-10 transition-transform duration-300 ${folded ? '' : 'rotate-180'}`}
                 />
@@ -92,21 +92,15 @@ export const MovieForm: React.FC = () => {
                                 className="movie-form-input w-full mt-2"
                             />
                             <input
-                                type="number"
+                                type="text"
                                 placeholder="Year of production"
-                                value={year ?? ''}
-                                inputMode={'numeric'}
-                                step="1"
-                                min="1888"
+                                value={year}
+                                inputMode="numeric"
+                                pattern="[0-9]*"
                                 onChange={e => {
                                     const value = e.target.value;
-                                    if (value === '') {
-                                        setYear(undefined);
-                                    } else {
-                                        const parsed = parseInt(value, 10);
-                                        if (!isNaN(parsed)) {
-                                            setYear(parsed);
-                                        }
+                                    if (value === '' || /^[0-9]+$/.test(value)) {
+                                        setYear(value);
                                     }
                                 }}
                                 className="movie-form-input w-full mt-2"
@@ -119,21 +113,15 @@ export const MovieForm: React.FC = () => {
                                 rows={2}
                             />
                             <input
-                                type="number"
+                                type="text"
                                 placeholder="Duration (minutes)"
-                                value={duration ?? ''}
-                                inputMode={'numeric'}
-                                step="1"
-                                min="1"
+                                value={duration}
+                                inputMode="numeric"
+                                pattern="[0-9]*"
                                 onChange={e => {
                                     const value = e.target.value;
-                                    if (value === '') {
-                                        setDuration(undefined);
-                                    } else {
-                                        const parsed = parseInt(value, 10);
-                                        if (!isNaN(parsed)) {
-                                            setDuration(parsed);
-                                        }
+                                    if (value === '' || /^[0-9]+$/.test(value)) {
+                                        setDuration(value);
                                     }
                                 }}
                                 className="movie-form-input w-full mt-2"
@@ -159,9 +147,9 @@ export const MovieForm: React.FC = () => {
                         onClick={() => {
                             const newMovie: Movie = {
                                 title,
-                                year,
+                                year: year ? parseInt(year, 10) : undefined,
                                 description,
-                                duration,
+                                duration: duration ? parseInt(duration, 10) : undefined,
                                 posterUrl,
                             };
                             handleAddMovie(newMovie).then();
@@ -179,10 +167,10 @@ export const MovieForm: React.FC = () => {
 function validateMovie(newMovie: Movie) {
     if (!newMovie.title) {
         throw ('Movie requires the title');
-    } else if (!newMovie.year) {
-        throw ('Movie requires the year of production');
-    } else if (!newMovie.duration) {
-        throw ('Movie requires the duration');
+    } else if (!newMovie.year || isNaN(newMovie.year) || newMovie.year < 1888) {
+        throw ('Movie requires a valid year of production');
+    } else if (!newMovie.duration || isNaN(newMovie.duration) || newMovie.duration < 1) {
+        throw ('Movie requires a valid duration');
     } else if (!newMovie.posterUrl) {
         throw ('Movie requires the poster');
     }
