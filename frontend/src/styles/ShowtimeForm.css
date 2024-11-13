@@ -19,7 +19,7 @@
     }
 
     button:hover {
-        @apply hover:bg-oxford_blue-300 ;
+        @apply hover:bg-oxford_blue-200 ;
     }
 
     .react-calendar__tile--now {

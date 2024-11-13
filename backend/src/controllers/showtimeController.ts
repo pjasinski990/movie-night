@@ -19,7 +19,7 @@ export const getShowtimes = async (req: Request, res: Response) => {
 
 export const createShowtime = async (req: Request, res: Response) => {
     try {
-        const movie = await AppDataSource.getRepository(Movie).findOne({ where: { id: req.body.movie_id } });
+        const movie = await AppDataSource.getRepository(Movie).findOne({ where: { id: req.body.movie.id } });
         if (!movie) {
             res.status(404).json({ message: 'Movie not found' });
             return
