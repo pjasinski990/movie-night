@@ -1,5 +1,5 @@
 .movie-card-border {
-    @apply border-b-[3px] border-r-[2px] border-oxford_blue-400 rounded-sm;
+    @apply border-b-[5px] border-l-[2px] border-oxford_blue-400 rounded-sm;
 
 }
 
@@ -8,7 +8,7 @@
 }
 
 .movie-card-animation {
-    @apply hover:shadow-xl transform transition-transform duration-150 ease-in-out;
+    @apply hover:shadow-xl transition-colors duration-150 ease-in-out hover:bg-rich_black-400;
 }
 
 .movie-poster {
@@ -17,8 +17,8 @@
 
 .delete-button {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 0;
+    right: 0;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -28,10 +28,10 @@
 .delete-button .icon {
     width: 24px;
     height: 24px;
-    color: #ff5f5f;
     transition: color 0.2s ease;
+    @apply text-rose-700;
 }
 
 .delete-button .icon:hover {
-    color: #ff0000;
+    @apply text-rose-500;
 }

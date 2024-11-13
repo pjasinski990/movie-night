@@ -12,7 +12,7 @@
 }
 
 .nav-style {
-    @apply p-4 bg-rich_black flex justify-center
+    @apply p-4 bg-rich_black-300 flex justify-center
 }
 
 .content-card {
@@ -22,4 +22,20 @@
 .Toastify__toast {
     @apply bg-rich_black bg-opacity-80 !important;
     @apply text-mikado_yellow-900 !important;
+}
+
+.app-form-input {
+    @apply w-full mb-4 p-3 rounded-sm border-b-2 border-oxford_blue-500 bg-rich_black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-mikado_yellow-800;
+}
+
+.app-form {
+    @apply bg-rich_black rounded-sm my-4 shadow-md;
+}
+
+.app-form-heading {
+    @apply flex px-4 bg-rich_black justify-between items-center cursor-pointer hover:bg-rich_black-100 transition-all rounded-sm;
+}
+
+.app-form-submit-button {
+    @apply bg-gold-400 text-white py-2 px-4 rounded-sm hover:bg-mikado_yellow-500 transition-colors font-semibold;
 }

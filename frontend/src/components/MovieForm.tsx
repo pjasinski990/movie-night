@@ -70,12 +70,12 @@ export const MovieForm: React.FC = () => {
     };
 
     return (
-        <div className={'movie-form'}>
+        <div className={'app-form'}>
             <div
-                className={`movie-form-heading ${folded ? 'py-2' : 'py-4'}`}
+                className={`app-form-heading ${folded ? 'py-2' : 'py-4'}`}
                 onClick={() => setFolded(!folded)}
             >
-                <h2 className={`text-xl font-semibold text-white`}>I have a better idea...</h2>
+                <h2 className={`text-xl font-semibold text-white`}>I've got a better idea...</h2>
                 <ChevronDown
                     className={`w-10 transition-transform duration-300 ${folded ? '' : 'rotate-180'}`}
                 />
@@ -83,13 +83,13 @@ export const MovieForm: React.FC = () => {
             <div className={`transition-height duration-300 ${folded ? 'max-h-0 overflow-hidden' : 'max-h-screen'}`}>
                 <div className="p-4 pt-0 flex flex-col space-y-4">
                     <div className="flex flex-row items-stretch space-x-3">
-                        <div className="flex-grow mt-2">
+                        <div className="flex-grow mt-2 mr-2">
                             <input
                                 type="text"
                                 placeholder="Title"
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
-                                className="movie-form-input w-full mt-2"
+                                className="app-form-input w-full mt-2"
                             />
                             <input
                                 type="text"
@@ -103,13 +103,13 @@ export const MovieForm: React.FC = () => {
                                         setYear(value);
                                     }
                                 }}
-                                className="movie-form-input w-full mt-2"
+                                className="app-form-input w-full mt-2"
                             />
                             <textarea
                                 placeholder="Description"
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
-                                className="movie-form-input w-full mt-2"
+                                className="app-form-input w-full mt-2"
                                 rows={2}
                             />
                             <input
@@ -124,7 +124,7 @@ export const MovieForm: React.FC = () => {
                                         setDuration(value);
                                     }
                                 }}
-                                className="movie-form-input w-full mt-2"
+                                className="app-form-input w-full mt-2"
                             />
                         </div>
                         <div
@@ -154,7 +154,7 @@ export const MovieForm: React.FC = () => {
                             };
                             handleAddMovie(newMovie).then();
                         }}
-                        className="movie-form-submit-button w-full"
+                        className="app-form-submit-button w-full"
                     >
                         Add Movie
                     </button>

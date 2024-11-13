@@ -1,7 +1,8 @@
 import { Movie } from "./models/movie.ts";
 import { Showtime } from "./models/showtime.ts";
+import { Seat } from "./models/seat.ts";
 
-export async function getMovies(): Promise<Movie[]> {
+export async function fetchMovies(): Promise<Movie[]> {
     return await fetch('/api/movies')
         .then((res) => res.json())
         .then((data) => {
@@ -33,7 +34,7 @@ export async function deleteMovie(movieId: number): Promise<Movie> {
     return await res.json();
 }
 
-export async function getShowtimes(): Promise<Showtime[]> {
+export async function fetchShowtimes(): Promise<Showtime[]> {
     return await fetch('/api/showtimes')
         .then((res) => res.json())
         .then((data) => {
@@ -43,3 +44,23 @@ export async function getShowtimes(): Promise<Showtime[]> {
             console.log(err)
         });
 }
+
+export async function postShowtime(showtime: Showtime): Promise<Showtime> {
+    let res = await fetch('/api/showtimes', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(showtime),
+    });
+    return await res.json();
+}
+
+export const fetchSeats = async (showtimeId: number): Promise<Seat[]> => {
+    return await fetch(`/api/showtimes/${showtimeId}/seats`)
+        .then((res) => res.json())
+        .then((data) => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        });
+};

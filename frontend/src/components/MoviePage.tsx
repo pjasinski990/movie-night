@@ -33,7 +33,7 @@ const Movies: React.FC = () => {
 
     return (
         <div className="content-card">
-            <h1 className="self-center text-3xl font-bold underline mb-6">Movies</h1>
+            <h1 className="self-center text-3xl font-bold underline mb-6">Showing</h1>
             {isLoading ? (
                 <p className={'text-white'}>Loading movies...</p>
             ) : (

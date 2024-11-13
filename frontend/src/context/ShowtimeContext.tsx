@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Showtime } from "../lib/models/showtime.ts";
-import { getShowtimes } from "../lib/backendService.ts";
+import { fetchShowtimes } from "../lib/backendService.ts";
 
 export interface ShowtimeContextType {
     showtimes: Showtime[];
@@ -18,7 +18,7 @@ export const ShowtimeProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
     useEffect(() => {
         setIsLoading(true);
-        getShowtimes().then(showtimes => {
+        fetchShowtimes().then(showtimes => {
             setShowtimes(showtimes)
             setIsLoading(false);
         });

@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { Movie } from "../lib/models/movie.ts";
-import { getMovies } from "../lib/backendService.ts";
+import { fetchMovies } from "../lib/backendService.ts";
 
 export interface MovieContextType {
     movies: Movie[];
@@ -18,7 +18,7 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     useEffect(() => {
         setIsLoading(true);
-        getMovies().then(movies => {
+        fetchMovies().then(movies => {
             setMovies(movies)
             setIsLoading(false);
         });

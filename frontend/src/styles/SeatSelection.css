@@ -1,0 +1,27 @@
+.seat-selection {
+    @apply flex flex-col items-center;
+}
+
+.seat-map {
+    @apply grid grid-cols-8 gap-2 mb-4;
+}
+
+.seat {
+    @apply w-10 h-10 text-center rounded cursor-pointer;
+}
+
+.seat.available {
+    @apply bg-green-500 hover:bg-green-600;
+}
+
+.seat.unavailable {
+    @apply bg-gray-500 cursor-not-allowed;
+}
+
+.seat.selected {
+    @apply bg-blue-500;
+}
+
+.confirm-button {
+    @apply bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 disabled:bg-gray-500;
+}

@@ -7,7 +7,7 @@ export const MovieCard: React.FC<{ movie: Movie; onDelete: (id?: number) => void
     console.log(movie)
     return (
         <div className='movie-card movie-card-border movie-card-animation'>
-            <div className={'flex flex-row space-x-4'}>
+            <div className={'flex flex-row space-x-4 relative'}>
                 <img src={movie.posterUrl} alt={`${movie.title} poster`} className="movie-poster"/>
                 <div className={'flex flex-col space-x-4'}>
                     <button
