@@ -1,5 +1,5 @@
 .showtime-card {
-    @apply flex flex-col bg-rich_black hover:bg-rich_black-400 p-4 shadow-md rounded-md;
+    @apply flex flex-col bg-rich_black hover:bg-rich_black-400 shadow-md rounded-md;
 }
 
 .select-button {

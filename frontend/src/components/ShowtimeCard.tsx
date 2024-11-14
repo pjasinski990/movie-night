@@ -22,8 +22,8 @@ export const ShowtimeCard: React.FC<ShowtimeCardProps> = ({ showtime }) => {
     }
 
     return (
-        <div className={'showtime-card cursor-pointer'} onClick={() => setIsSelectingSeats(!isSelectingSeats)}>
-            <div className={'flex flex-row justify-between items-center'}>
+        <div className={'showtime-card cursor-pointer'}>
+            <div className={'flex flex-row p-4 justify-between items-center'} onClick={() => setIsSelectingSeats(!isSelectingSeats)}>
                 <div className={'flex-col'}>
                     <h2 className={'text-2xl font-semibold'}>{showtime.movie.title}</h2>
                     <p className={'text-l font-semibold'}>{formattedTime}</p>
@@ -40,7 +40,7 @@ export const ShowtimeCard: React.FC<ShowtimeCardProps> = ({ showtime }) => {
 
             <div
                 className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                    isSelectingSeats ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                    isSelectingSeats ? 'max-h-[100vh] opacity-100' : 'max-h-0 opacity-0'
                 }`}
             >
                 <SeatSelection showtimeId={showtime.id} />

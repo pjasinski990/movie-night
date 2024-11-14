@@ -27,19 +27,24 @@ export const SeatSelection: React.FC<SeatSelectionProps> = ({ showtimeId }) => {
     };
 
     return (
-        <div className="seat-selection">
-            <h2 className="text-xl text-white mb-4">Select Your Seats</h2>
-            <div className="seat-map">
-                {seats.map(seat => (
-                    <button
-                        key={seat.id}
-                        onClick={() => handleSelectSeat(seat.id)}
-                        className={`seat ${seat.booking ? 'unavailable' : 'available'} ${selectedSeats.includes(seat.id) ? 'selected' : ''}`}
-                        disabled={!seat.isAvailable}
-                    >
-                        {seat.label}
-                    </button>
-                ))}
+        <div className={'flex flex-col items-center'}>
+            <h2 className="text-xl text-white">Select Your Seats</h2>
+            <div className="relative">
+                <img src={'/seat_select.gif'} alt={'seat selection background'} className={'h-[400px]'}/>
+                {seats.map((seat) => {
+                    const positionStyles = getSeatPosition(seat.label);
+                    return (
+                        <button
+                            key={seat.id}
+                            onClick={() => handleSelectSeat(seat.id)}
+                            className={`absolute seat ${seat.booking ? 'unavailable' : 'available'} ${selectedSeats.includes(seat.id) ? 'selected' : ''}`}
+                            style={positionStyles}
+                            disabled={!seat.isAvailable}
+                        >
+                            {seat.label}
+                        </button>
+                    );
+                })}
             </div>
             <button
                 onClick={handleConfirmSeats}
@@ -51,3 +56,18 @@ export const SeatSelection: React.FC<SeatSelectionProps> = ({ showtimeId }) => {
         </div>
     );
 };
+
+function getSeatPosition(label: string): { top: string; left: string } {
+    if (!['C1', 'C2', 'C3', 'F1'].includes(label)) {
+        throw new Error(`Invalid seat label received: ${label}`)
+    }
+
+    const positions: { [key: string]: { top: string; left: string } } = {
+        'C1': { top: '155px', left: '145px' },
+        'C2': { top: '180px', left: '116px' },
+        'C3': { top: '210px', left: '70px' },
+        'F1': { top: '284px', left: '130px' },
+    };
+    return positions[label as 'C1' | 'C2' | 'C3' | 'F1'];
+}
+
