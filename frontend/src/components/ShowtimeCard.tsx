@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { Showtime } from '../lib/models/showtime.ts';
 import { SeatSelection } from './SeatSelection.tsx';
 import '../styles/SeatSelection.css';
-import { getReadableDate, getReadableTime } from "../lib/util.ts";
+import '../styles/ShowtimeCard.css'
+import { getReadableTime } from "../lib/util.ts";
+import { ChevronDown } from "lucide-react";
 
 interface ShowtimeCardProps {
     showtime: Showtime;
@@ -12,13 +14,7 @@ export const ShowtimeCard: React.FC<ShowtimeCardProps> = ({ showtime }) => {
     const [isSelectingSeats, setIsSelectingSeats] = useState(false);
 
     const showDate = new Date(showtime.show_date);
-    const formattedDate = getReadableDate(showDate)
     const formattedTime = getReadableTime(showDate)
-    const formattedDateTime = `${formattedDate} ${formattedTime}`;
-
-    const handleSelectShowtime = () => {
-        setIsSelectingSeats(true);
-    };
 
     if (!showtime.id) {
         console.error(`Trying to render showtime without id: ${JSON.stringify(showtime)}`)
@@ -26,21 +22,29 @@ export const ShowtimeCard: React.FC<ShowtimeCardProps> = ({ showtime }) => {
     }
 
     return (
-        <div className='showtime-card'>
-            {!isSelectingSeats ? (
-                <>
-                    <h2 className="text-2xl font-semibold">{showtime.movie.title}</h2>
-                    <p className="text-l font-semibold mb-2">{formattedDateTime}</p>
-                    <button
-                        onClick={handleSelectShowtime}
-                        className="select-button"
-                    >
+        <div className={'showtime-card cursor-pointer'} onClick={() => setIsSelectingSeats(!isSelectingSeats)}>
+            <div className={'flex flex-row justify-between items-center'}>
+                <div className={'flex-col'}>
+                    <h2 className={'text-2xl font-semibold'}>{showtime.movie.title}</h2>
+                    <p className={'text-l font-semibold'}>{formattedTime}</p>
+                </div>
+                <button
+                    className={'select-button'}
+                >
+                    <div className={'flex flex-row'}>
                         Select Seats
-                    </button>
-                </>
-            ) : (
+                        <ChevronDown className={`ml-2 w-10 transition-transform duration-300 ${isSelectingSeats ? 'rotate-180' : ''}`} />
+                    </div>
+                </button>
+            </div>
+
+            <div
+                className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                    isSelectingSeats ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                }`}
+            >
                 <SeatSelection showtimeId={showtime.id} />
-            )}
+            </div>
         </div>
     );
 };

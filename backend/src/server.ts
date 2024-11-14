@@ -14,4 +14,4 @@ async function runServer() {
     })
 }
 
-runServer().catch(err => console.log(err));
+runServer().catch(err => console.error(err));

@@ -9,7 +9,7 @@ export async function fetchMovies(): Promise<Movie[]> {
             return data
         })
         .catch((err) => {
-            console.log(err)
+            console.error(err)
         });
 }
 
@@ -41,7 +41,7 @@ export async function fetchShowtimes(): Promise<Showtime[]> {
             return data
         })
         .catch((err) => {
-            console.log(err)
+            console.error(err)
         });
 }
 
@@ -73,6 +73,6 @@ export const fetchSeats = async (showtimeId: number): Promise<Seat[]> => {
             return data
         })
         .catch((err) => {
-            console.log(err)
+            console.error(err)
         });
 };

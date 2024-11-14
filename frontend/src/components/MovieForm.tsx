@@ -40,7 +40,6 @@ export const MovieForm: React.FC = () => {
             const data = await response.json();
             setPosterUrl(data.url);
         } catch (error) {
-            console.log(error);
             toast.error('Failed to upload poster');
         }
     };

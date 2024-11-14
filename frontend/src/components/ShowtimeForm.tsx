@@ -43,7 +43,6 @@ export const ShowtimeForm: React.FC<{ movies: Movie[] }> = ({ movies }) => {
             movie: movie!,
             bookings: [],
         };
-        console.log(newShowtime)
         try {
             validateShowtime(newShowtime);
             const res = await postShowtime(newShowtime);
@@ -129,8 +128,7 @@ const MovieSelector: React.FC<{ movies: Movie[], selectedMovie: Movie | undefine
                         <MovieOption
                             movie={movie}
                             isSelected={String(movie.id) === String(selectedMovie?.id)}
-                            onClick={() => {console.log(movie)
-                                setMovie(movie)}}
+                            onClick={ () => setMovie(movie) }
                         />
                     </li>
                 ))}

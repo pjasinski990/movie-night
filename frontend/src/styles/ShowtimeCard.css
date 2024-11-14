@@ -1,7 +1,11 @@
 .showtime-card {
-    @apply flex flex-col bg-rich_black p-4 shadow-md rounded-md;
+    @apply flex flex-col bg-rich_black hover:bg-rich_black-400 p-4 shadow-md rounded-md;
 }
 
 .select-button {
-    @apply mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600;
+    @apply text-gold-900;
+}
+
+.showtime-card:hover .select-button {
+    text-decoration: underline;
 }

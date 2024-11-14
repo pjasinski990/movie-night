@@ -73,7 +73,7 @@ export const getSeatsForShowtime = async (req: Request, res: Response) => {
 
         const showtime = await AppDataSource.getRepository(Showtime).findOne({
             where: { id: showtimeId },
-            relations: ['seats', 'seats.bookings'],
+            relations: ['seats', 'seats.booking'],
         });
 
         if (!showtime) {
@@ -83,6 +83,7 @@ export const getSeatsForShowtime = async (req: Request, res: Response) => {
 
         res.json(showtime.seats);
     } catch (error) {
+        console.error(error)
         createRouteErrorResponse(error, req, res);
     }
 };

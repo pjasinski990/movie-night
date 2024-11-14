@@ -28,13 +28,13 @@ export const SeatSelection: React.FC<SeatSelectionProps> = ({ showtimeId }) => {
 
     return (
         <div className="seat-selection">
-            <h2 className="text-2xl font-semibold mb-4">Select Your Seats</h2>
+            <h2 className="text-xl text-white mb-4">Select Your Seats</h2>
             <div className="seat-map">
                 {seats.map(seat => (
                     <button
                         key={seat.id}
                         onClick={() => handleSelectSeat(seat.id)}
-                        className={`seat ${seat.isAvailable ? 'available' : 'unavailable'} ${selectedSeats.includes(seat.id) ? 'selected' : ''}`}
+                        className={`seat ${seat.booking ? 'unavailable' : 'available'} ${selectedSeats.includes(seat.id) ? 'selected' : ''}`}
                         disabled={!seat.isAvailable}
                     >
                         {seat.label}

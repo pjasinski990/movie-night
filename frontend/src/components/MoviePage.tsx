@@ -34,7 +34,7 @@ const Movies: React.FC = () => {
     }
 
     return (
-        <div>
+        <div className={'flex flex-col'}>
             <h1 className="self-center text-3xl font-bold underline mb-6">Showing</h1>
             {isLoading ? (
                 <p className={'text-white'}>Loading movies...</p>

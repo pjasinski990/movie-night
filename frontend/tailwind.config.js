@@ -8,6 +8,9 @@ export default {
     ],
     theme: {
         extend: {
+            backgroundImage: {
+                'spiral': "url('/its_the_spiral.svg')",
+            },
             colors: {
                 neutral: {
                     light: '#F5F5F5',

@@ -22,7 +22,6 @@ export const createBooking = async (req: Request, res: Response) => {
 
         const seats = await seatRepository.find({
             where: { id: In(seatIds) },
-            relations: ['booking', 'showtime'],
         });
 
         if (seats.length !== seatIds.length) {

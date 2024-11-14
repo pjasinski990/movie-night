@@ -8,15 +8,15 @@
 }
 
 .page-bg {
-    @apply p-4 flex justify-center items-start bg-oxford_blue-300 min-h-screen
+    @apply p-4 flex justify-center items-start bg-spiral bg-repeat bg-[length:24px] bg-oxford_blue-300 min-h-screen;
 }
 
 .nav-style {
-    @apply p-4 bg-rich_black-300 flex justify-center
+    @apply p-4 bg-rich_black-300 flex justify-center;
 }
 
 .content-card {
-    @apply bg-rich_black flex flex-col bg-opacity-40 rounded-lg p-8 shadow-lg w-full max-w-screen-lg min-h-[800px]
+    @apply bg-rich_black flex flex-col bg-opacity-40 rounded-lg p-8 shadow-lg w-full max-w-screen-lg min-h-[800px];
 }
 
 .Toastify__toast {

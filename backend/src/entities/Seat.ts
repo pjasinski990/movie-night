@@ -14,5 +14,5 @@ export class Seat {
     showtime!: Showtime;
 
     @OneToOne(() => Booking, (booking) => booking.seat)
-    booking!: Booking[];
+    booking!: Booking;
 }
