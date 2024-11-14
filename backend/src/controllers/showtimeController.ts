@@ -50,6 +50,23 @@ export const createShowtime = async (req: Request, res: Response) => {
     }
 };
 
+export const deleteShowtime = async (req: Request, res: Response) => {
+    try {
+        const showtimeRepository = AppDataSource.getRepository(Showtime);
+        const toDelete = await showtimeRepository.findOne({ where: { id: req.body.id } });
+
+        if (!toDelete) {
+            res.status(404)
+            return
+        }
+
+        await showtimeRepository.delete({ id: req.body.id });
+        res.status(200).json(toDelete);
+    } catch (error) {
+        createRouteErrorResponse(error, req, res);
+    }
+};
+
 export const getSeatsForShowtime = async (req: Request, res: Response) => {
     try {
         const showtimeId = parseInt(req.params.id, 10);

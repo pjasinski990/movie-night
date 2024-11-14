@@ -54,6 +54,18 @@ export async function postShowtime(showtime: Showtime): Promise<Showtime> {
     return await res.json();
 }
 
+export async function deleteShowtime(showtimeId: number): Promise<Showtime> {
+    let res = await fetch('/api/showtimes', {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ id: showtimeId }),
+    });
+    if (res.status >= 400) {
+        throw new Error(res.statusText);
+    }
+    return await res.json();
+}
+
 export const fetchSeats = async (showtimeId: number): Promise<Seat[]> => {
     return await fetch(`/api/showtimes/${showtimeId}/seats`)
         .then((res) => res.json())

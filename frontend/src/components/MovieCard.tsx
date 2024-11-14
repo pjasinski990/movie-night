@@ -4,7 +4,6 @@ import { X } from "lucide-react";
 import '../styles/MovieCard.css';
 
 export const MovieCard: React.FC<{ movie: Movie; onDelete: (id?: number) => void }> = ({ movie, onDelete }) => {
-    console.log(movie)
     return (
         <div className='movie-card movie-card-border movie-card-animation'>
             <div className={'flex flex-row space-x-4 relative'}>

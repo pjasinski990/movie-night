@@ -24,7 +24,6 @@ export const createMovie = async (req: Request, res: Response) => {
 
 export const deleteMovie = async (req: Request, res: Response) => {
     try {
-        console.log(`removing ${req.body}`)
         const movieRepository = AppDataSource.getRepository(Movie);
         const toDelete = await movieRepository.findOne({ where: { id: req.body.id } });
 

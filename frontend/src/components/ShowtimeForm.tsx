@@ -64,7 +64,7 @@ export const ShowtimeForm: React.FC<{ movies: Movie[] }> = ({ movies }) => {
                 className={`app-form-heading ${folded ? 'py-2' : 'py-4'}`}
                 onClick={() => setFolded(!folded)}
             >
-                <h2 className={`text-xl font-semibold text-white`}>I've got a better idea...</h2>
+                <h2 className={`text-xl font-semibold text-white`}>I'm on a tight schedule...</h2>
                 <ChevronDown
                     className={`w-10 transition-transform duration-300 ${folded ? '' : 'rotate-180'}`}
                 />

@@ -9,9 +9,11 @@ import { MovieForm } from "./MovieForm.tsx";
 export const MoviePage: React.FC = () => {
     return (
         <MovieProvider>
-            <Movies />
+            <div className="content-card">
+                <Movies/>
+            </div>
         </MovieProvider>
-    )
+)
 }
 
 const Movies: React.FC = () => {
@@ -32,7 +34,7 @@ const Movies: React.FC = () => {
     }
 
     return (
-        <div className="content-card">
+        <div>
             <h1 className="self-center text-3xl font-bold underline mb-6">Showing</h1>
             {isLoading ? (
                 <p className={'text-white'}>Loading movies...</p>

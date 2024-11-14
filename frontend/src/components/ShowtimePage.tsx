@@ -4,35 +4,35 @@ import { MovieProvider, useMovies } from "../context/MovieContext.tsx";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ShowtimeCard } from "./ShowtimeCard.tsx";
-import { postShowtime } from "../lib/backendService.ts";
 import { CalendarDays } from "lucide-react";
 import { ShowtimeForm } from "./ShowtimeForm.tsx";
+import { ToggleSwitch } from "./ToggleSwitch.tsx";
+import { Showtime } from "../lib/models/showtime.ts";
+import { aggregateBy, getReadableDate } from "../lib/util.ts";
 
 export const ShowtimePage: React.FC = () => {
     return (
         <MovieProvider>
             <ShowtimeProvider>
-                <Showtimes />
+                <div className={'content-card'}>
+                    <ShowtimesPageContent />
+                </div>
             </ShowtimeProvider>
         </MovieProvider>
     )
 }
 
-const Showtimes: React.FC = () => {
-    const { movies } = useMovies()
+const ShowtimesPageContent: React.FC = () => {
+    const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+    const [filteringDay, setFilteringDay] = useState<boolean>(false);
+
+    const { movies } = useMovies();
     const { showtimes, isLoading } = useShowtimes();
 
-    const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-
-    const filteredShowtimes = showtimes.filter(showtime => {
-        return selectedDate
-            ? new Date(showtime.show_date).toDateString() === selectedDate.toDateString()
-            : true;
-    });
-
     return (
-        <div className="content-card">
+        <div>
             <h1 className="self-center text-3xl font-bold underline mb-6">Showtimes</h1>
+            <ToggleSwitch label={'Filter by date'} onToggle={(newValue) => {setFilteringDay(newValue)}} />
             <div className="mb-4">
                 <DatePicker
                     selected={selectedDate}
@@ -44,19 +44,62 @@ const Showtimes: React.FC = () => {
                 />
             </div>
             {isLoading ? (
-                <p className={'text-white'}>Loading showtimes...</p>
-            ) : filteredShowtimes.length > 0 ? (
-                <ul className="flex flex-col gap-6">
-                    {filteredShowtimes.map((showtime) => (
-                        <li key={showtime.id} className="w-full">
-                            <ShowtimeCard showtime={showtime}/>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p className={'text-white'}>No showtimes available for this date. Unless..?</p>
-            )}
+                    <p className={'text-white'}>Loading showtimes...</p>
+                ) :
+                <Showtimes showtimes={showtimes} />
+            }
             <ShowtimeForm movies={movies} />
         </div>
     );
 };
+
+const Showtimes: React.FC<{ showtimes: Showtime[] }> = ({ showtimes }) => {
+    const upcomingShowtimes = getUpcomingShowtimesInOrder(showtimes);
+    const dailyRepertoires = aggregateBy(upcomingShowtimes, (showtime: Showtime) => new Date(showtime.show_date).toLocaleDateString())
+
+    if (Object.keys(dailyRepertoires).length === 0) {
+        return (
+            <p className={'text-white'}>No showtimes available.</p>
+        )
+    }
+
+    return (
+        <ul className="flex flex-col gap-6">
+            {Object.keys(dailyRepertoires).map((showDate) => (
+                <li key={showDate} className="w-full">
+                    <DailyRepertoire
+                        date={new Date(dailyRepertoires[showDate][0].show_date)}
+                        showtimes={dailyRepertoires[showDate]}
+                    />
+                </li>
+            ))}
+        </ul>
+    )
+}
+
+const DailyRepertoire: React.FC<{ date: Date, showtimes: Showtime[] }> = ({ date, showtimes }) => {
+    return (
+        <div className={'flex flex-col'}>
+            <h2 className={'text-xl font-semibold text-white ml-2 mb-2'}>{getReadableDate(date)}</h2>
+            <div className={'border-2 border-oxford_blue-400 p-4'}>
+                <ul>
+                    {showtimes.map((showtime) => (
+                        <li key={showtime.id}>
+                            <ShowtimeCard showtime={showtime}/>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </div>
+    )
+}
+
+function getUpcomingShowtimesInOrder(showtimes: Showtime[]) {
+    return showtimes
+        .filter(showtime => {
+            const showDate = new Date(showtime.show_date);
+            const now = new Date();
+            return showDate >= now
+        })
+        .sort((a, b) => new Date(a.show_date).getTime() - new Date(b.show_date).getTime());
+}

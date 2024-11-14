@@ -1,10 +1,11 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { Showtime } from "../lib/models/showtime.ts";
-import { fetchShowtimes } from "../lib/backendService.ts";
+import { deleteShowtime, fetchShowtimes } from "../lib/backendService.ts";
 
 export interface ShowtimeContextType {
     showtimes: Showtime[];
     setShowtimes: (showtimes: Showtime[]) => void;
+    deleteShowtime: (id: number) => Promise<Showtime>;
     isLoading: boolean;
 }
 
@@ -24,11 +25,19 @@ export const ShowtimeProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         });
     }, []);
 
+    const handleDeleteShowtime = useCallback(async (id: number): Promise<Showtime> => {
+        return deleteShowtime(id).then((res: Showtime) => {
+            setShowtimes(showtimes.filter(id => id !== id));
+            return res
+        })
+    }, [showtimes])
+
     return (
         <ShowtimeContext.Provider
             value={{
                 showtimes,
                 setShowtimes,
+                deleteShowtime: handleDeleteShowtime,
                 isLoading,
             }}
         >
