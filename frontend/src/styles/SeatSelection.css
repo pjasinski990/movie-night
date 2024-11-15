@@ -7,21 +7,33 @@
 }
 
 .seat {
-    @apply w-9 h-9 rounded-full text-center border-[1px] border-gold cursor-pointer opacity-80;
+    @apply w-9 h-9 rounded-full text-center border-[1px] border-gold cursor-pointer opacity-70;
 }
 
 .seat.available {
-    @apply bg-oxford_blue-500 hover:bg-yale_blue-500;
+    @apply bg-oxford_blue-500 hover:opacity-100;
 }
 
 .seat.unavailable {
-    @apply bg-gray-700 text-white border-none cursor-not-allowed;
+    @apply bg-gray-800 opacity-100 text-white border-none cursor-default;
 }
 
 .seat.selected {
-    @apply bg-blue-500;
+    @apply bg-gold-500 font-bold text-rich_black;
 }
 
 .confirm-button {
-    @apply bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 disabled:bg-gray-500;
+    @apply w-full bg-rich_black-100 h-[42px] border-[1px] border-gold text-white py-2 px-4 rounded;
+}
+
+.confirm-button:not(:disabled):hover {
+    @apply bg-gold-600 transition-colors duration-150 text-rich_black font-semibold;
+}
+
+.confirm-button:disabled {
+    @apply bg-gray-800 border-none;
+}
+
+.seat-form-input {
+    @apply w-full p-2 rounded-sm border-b-2 border-oxford_blue-500 bg-transparent placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-mikado_yellow-800;
 }

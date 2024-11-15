@@ -1,8 +1,9 @@
 import { Booking } from "./booking.ts";
+import { Showtime } from "./showtime.ts";
 
 export interface Seat {
     id: number;
     label: string;
-    isAvailable: boolean;
-    booking: Booking;
+    showtime: Showtime;
+    booking?: Booking;
 }

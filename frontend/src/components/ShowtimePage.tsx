@@ -9,13 +9,13 @@ import { aggregateBy, getReadableDate } from "../lib/util.ts";
 
 export const ShowtimePage: React.FC = () => {
     return (
-        <MovieProvider>
-            <ShowtimeProvider>
+        <ShowtimeProvider>
+            <MovieProvider>
                 <div className={'content-card'}>
                     <ShowtimesPageContent />
                 </div>
-            </ShowtimeProvider>
-        </MovieProvider>
+            </MovieProvider>
+        </ShowtimeProvider>
     )
 }
 

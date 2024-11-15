@@ -1,6 +1,7 @@
 import { Movie } from "./models/movie.ts";
 import { Showtime } from "./models/showtime.ts";
 import { Seat } from "./models/seat.ts";
+import { Booking } from "./models/booking.ts";
 
 export async function fetchMovies(): Promise<Movie[]> {
     return await fetch('/api/movies')
@@ -76,3 +77,12 @@ export const fetchSeats = async (showtimeId: number): Promise<Seat[]> => {
             console.error(err)
         });
 };
+
+export const bookSeats = async (buyerName: string, buyerEmail: string, seatIds: number[]): Promise<Booking[]> => {
+    let res = await fetch('/api/bookings/book', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ buyerName, buyerEmail, seatIds }),
+    });
+    return await res.json();
+}

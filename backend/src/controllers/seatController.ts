@@ -8,13 +8,10 @@ import { createRouteErrorResponse } from "../util";
 
 export const createBooking = async (req: Request, res: Response) => {
     try {
-        const { user_id: buyer_id, seat_ids } = req.body;
-        const seatIds = seat_ids.map((id: string | number) => Number(id));
-
-        const buyer = await AppDataSource.getRepository(Buyer).findOne({ where: { id: buyer_id } });
+        const { buyerName, buyerEmail, seatIds } = req.body;
+        let buyer = await AppDataSource.getRepository(Buyer).findOne({ where: { email: buyerEmail } });
         if (!buyer) {
-            res.status(404).json({ message: 'User not found' });
-            return
+            buyer = await AppDataSource.getRepository(Buyer).save({name: buyerName, email: buyerEmail});
         }
 
         const seatRepository = AppDataSource.getRepository(Seat);
@@ -46,7 +43,7 @@ export const createBooking = async (req: Request, res: Response) => {
 
         await bookingRepository.save(bookings);
 
-        res.status(201).json({ bookings });
+        res.status(201).json(bookings);
     } catch (error) {
         createRouteErrorResponse(error, req, res);
     }
