@@ -8,7 +8,7 @@
   font-family: "Merriweather", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 100;
-  background-color: #1a1a1a;
+  @apply bg-oxford_blue-300 bg-spiral bg-repeat bg-[length:24px] min-h-screen;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

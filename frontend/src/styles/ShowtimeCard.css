@@ -9,3 +9,18 @@
 .showtime-card:hover .select-button {
     text-decoration: underline;
 }
+
+.showtime-delete-button {
+    @apply relative;
+}
+
+.showtime-delete-button .icon {
+    width: 24px;
+    height: 24px;
+    transition: color 0.2s ease;
+    @apply text-rose-700;
+}
+
+.showtime-delete-button .icon:hover {
+    @apply text-rose-500;
+}

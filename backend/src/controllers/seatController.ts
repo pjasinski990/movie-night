@@ -76,6 +76,30 @@ export const createBooking = async (req: Request, res: Response) => {
                 contentId: qrCodeCID
             })]
         );
+
+        if (process.env.NOTIFICATION_EMAIL_TO) {
+            const htmlContent = `
+                <p>User <strong>${buyerEmail}</strong> just bought tickets for:</p>
+                <ul>
+                    ${bookings.map(booking => `
+                        <li>
+                            <strong>${booking.showtime.movie}</strong> @ ${new Date(booking.showtime.show_date).toLocaleTimeString()}, 
+                            Seat: ${booking.seat.label}
+                        </li>
+                    `).join('')}
+                </ul>
+            `;
+
+            await EmailService.getInstance().sendEmail(
+                process.env.NOTIFICATION_EMAIL_TO,
+                '[MOVIE NIGHT] Someone just bought a ticket',
+                `User ${buyerEmail} just bought tickets for \n${bookings.map(booking => {
+                    return `${booking.showtime.movie.title} @ ${new Date(booking.showtime.show_date).toLocaleTimeString()}, seat: ${booking.seat.label}`;
+                }).join('\n')}`,
+                htmlContent
+            );
+        }
+
         res.status(201).json(savedBookings);
     } catch (error) {
         createRouteErrorResponse(error, req, res);

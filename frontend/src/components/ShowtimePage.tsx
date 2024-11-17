@@ -20,26 +20,12 @@ export const ShowtimePage: React.FC = () => {
 }
 
 const ShowtimesPageContent: React.FC = () => {
-    // const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-    // const [filteringDay, setFilteringDay] = useState<boolean>(false);
-
     const { movies } = useMovies();
     const { showtimes, isLoading } = useShowtimes();
 
     return (
         <div className={'flex flex-col'}>
             <h1 className="self-center text-3xl font-bold underline mb-6">Showtimes</h1>
-            {/*<ToggleSwitch label={'Filter by date'} onToggle={(newValue) => {setFilteringDay(newValue)}} />*/}
-            {/*<div className="mb-4">*/}
-            {/*    <DatePicker*/}
-            {/*        selected={selectedDate}*/}
-            {/*        onChange={(date: Date | null) => setSelectedDate(date)}*/}
-            {/*        dateFormat="MMMM d, yyyy"*/}
-            {/*        className="p-2 rounded app-form-input"*/}
-            {/*        showIcon*/}
-            {/*        icon={<CalendarDays />}*/}
-            {/*    />*/}
-            {/*</div>*/}
             {isLoading ? (
                     <p className={'text-white'}>Loading showtimes...</p>
                 ) :
@@ -58,7 +44,7 @@ const Showtimes: React.FC<{ showtimes: Showtime[] }> = ({ showtimes }) => {
 
     if (Object.keys(dailyRepertoires).length === 0) {
         return (
-            <p className={'text-white'}>No showtimes available.</p>
+            <p className={'text-white ml-2'}>No showtimes available.</p>
         )
     }
 
@@ -85,7 +71,7 @@ const DailyRepertoire: React.FC<{ date: Date, showtimes: Showtime[] }> = ({ date
                     {showtimes.map((showtime, index) => (
                         <React.Fragment key={showtime.id}>
                             <li>
-                                <ShowtimeCard showtime={showtime}/>
+                                <ShowtimeCard showtime={showtime} />
                             </li>
                             {index < showtimes.length - 1 && <div className={'m-2'} />}
                         </React.Fragment>

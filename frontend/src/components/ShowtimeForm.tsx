@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Movie } from "../lib/models/movie.ts";
 import { postShowtime } from "../lib/backendService.ts";
 import { toast } from "react-toastify";
@@ -13,15 +13,31 @@ import '../styles/ShowtimeForm.css'
 
 export const ShowtimeForm: React.FC<{ movies: Movie[] }> = ({ movies }) => {
     const [dateTime, setDateTime] = useState<Date | null>(null);
-    const [time, setTime] = useState('12:00')
+    const [time, setTime] = useState('00:00')
     const [movie, setMovie] = useState<Movie | undefined>(undefined)
     const [folded, setFolded] = useState(true);
+    const contentRef = useRef<HTMLDivElement>(null);
 
     const { showtimes, setShowtimes } = useShowtimes()
 
+    useEffect(() => {
+        if (!folded && contentRef.current) {
+            const observer = new ResizeObserver(() => {
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: 'smooth',
+                });
+            });
+
+            observer.observe(contentRef.current);
+
+            return () => observer.disconnect();
+        }
+    }, [folded]);
+
     const clearForm = () => {
         setDateTime(null);
-        setTime('12:00');
+        setTime('00:00');
         setMovie(undefined);
     };
 
@@ -68,9 +84,13 @@ export const ShowtimeForm: React.FC<{ movies: Movie[] }> = ({ movies }) => {
                     className={`w-10 transition-transform duration-300 ${folded ? '' : 'rotate-180'}`}
                 />
             </div>
-            <div className={`transition-height duration-300 ${folded ? 'max-h-0 overflow-hidden' : 'max-h-screen'}`}>
+
+            <div
+                ref={contentRef}
+                className={`transition-all duration-300 ease-in-out overflow-hidden ${folded ? 'max-h-0 opacity-0' : 'max-h-screen opacity-100'}`}
+            >
                 <div className="p-4 pt-0 flex flex-col space-y-8">
-                    <div className="h-[342px]">
+                    <div className="h-[382px]">
                         <div className="flex flex-row items-stretch space-x-3 h-full">
                             <div className="flex-1 h-full">
                                 <Calendar
@@ -97,6 +117,7 @@ export const ShowtimeForm: React.FC<{ movies: Movie[] }> = ({ movies }) => {
                                     value={time}
                                     format={'HH:mm'}
                                     disableClock={true}
+                                    locale={navigator.language}
                                     className="showtime-form-time-picker w-full mt-4 text-xl"
                                 />
                             </div>

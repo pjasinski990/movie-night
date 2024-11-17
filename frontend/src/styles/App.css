@@ -8,7 +8,7 @@
 }
 
 .page-bg {
-    @apply p-4 flex justify-center items-start bg-spiral bg-repeat bg-[length:24px] bg-oxford_blue-300 min-h-screen;
+    @apply p-4 flex justify-center items-start;
 }
 
 .nav-style {

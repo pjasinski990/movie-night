@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { deleteMovie } from "../lib/backendService.ts";
 import { MovieProvider, useMovies } from "../context/MovieContext.tsx";
 import { toast } from "react-toastify";
 import { MovieCard } from "./MovieCard.tsx";
 import '../styles/MovieForm.css'
 import { MovieForm } from "./MovieForm.tsx";
+import { ConfirmDialog } from "../dialog/ConfirmDialog.tsx";
 
 export const MoviePage: React.FC = () => {
     return (
@@ -17,6 +18,7 @@ export const MoviePage: React.FC = () => {
 }
 
 const Movies: React.FC = () => {
+    const [deletingMovieId, setDeletingMovieId] = useState<number | undefined>(undefined)
     const { movies, setMovies, isLoading } = useMovies();
 
     const handleDeleteMovie = async (id?: number) => {
@@ -27,6 +29,7 @@ const Movies: React.FC = () => {
             }
             const deleted = await deleteMovie(id);
             setMovies(movies.filter(movie => movie.id !== deleted.id))
+            setDeletingMovieId(undefined)
             toast.success(`Deleted movie ${deleted.title}`);
         } catch (error) {
             toast.error(`${error}`)
@@ -42,12 +45,19 @@ const Movies: React.FC = () => {
                 <ul className="flex flex-col gap-6">
                     {movies.map((movie) => (
                         <li key={movie.id} className="w-full">
-                            <MovieCard movie={movie} onDelete={handleDeleteMovie}/>
+                            <MovieCard movie={movie} onDelete={(id) => setDeletingMovieId(id)}/>
                         </li>
                     ))}
                 </ul>
             )}
             <MovieForm/>
+            <ConfirmDialog
+                open={!!deletingMovieId}
+                title={'Confirmation'}
+                message={`Delete movie?`}
+                onCancel={() => setDeletingMovieId(undefined)}
+                onConfirm={() => handleDeleteMovie(deletingMovieId)}
+            />
         </div>
     );
 };

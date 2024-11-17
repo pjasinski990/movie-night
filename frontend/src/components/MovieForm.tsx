@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useMovies } from "../context/MovieContext.tsx";
 import { postMovie } from "../lib/backendService.ts";
 import { toast } from "react-toastify";
@@ -22,9 +22,25 @@ export const MovieForm: React.FC = () => {
     const [description, setDescription] = useState('');
     const [duration, setDuration] = useState('');
     const [posterUrl, setPosterUrl] = useState('');
-
     const [folded, setFolded] = useState(true);
+    const contentRef = useRef<HTMLDivElement>(null);
+
     const { movies, setMovies } = useMovies();
+
+    useEffect(() => {
+        if (!folded && contentRef.current) {
+            const observer = new ResizeObserver(() => {
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: 'smooth',
+                });
+            });
+
+            observer.observe(contentRef.current);
+
+            return () => observer.disconnect();
+        }
+    }, [folded]);
 
     const onDrop = async (acceptedFiles: File[]) => {
         const file = acceptedFiles[0];
@@ -79,7 +95,10 @@ export const MovieForm: React.FC = () => {
                     className={`w-10 transition-transform duration-300 ${folded ? '' : 'rotate-180'}`}
                 />
             </div>
-            <div className={`transition-height duration-300 ${folded ? 'max-h-0 overflow-hidden' : 'max-h-screen'}`}>
+            <div
+                ref={contentRef}
+                className={`transition-all duration-300 ease-in-out overflow-hidden ${folded ? 'max-h-0 opacity-0' : 'max-h-screen opacity-100'}`}
+            >
                 <div className="p-4 pt-0 flex flex-col space-y-4">
                     <div className="flex flex-row items-stretch space-x-3">
                         <div className="flex-grow mt-2 mr-2">

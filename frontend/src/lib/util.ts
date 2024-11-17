@@ -3,7 +3,7 @@ export function getReadableDate(date: Date): string {
 }
 
 export function getReadableTime(date: Date): string {
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
 }
 
 export function aggregateBy<T, K extends keyof any>(array: T[], keyFn: (item: T) => K): Record<K, T[]> {
