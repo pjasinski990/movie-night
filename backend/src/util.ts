@@ -11,3 +11,7 @@ export function createRouteErrorResponse(error: any, request: Request, response:
 export function generateSeatLabels() {
     return ['C1', 'C2', 'C3', 'F1'];
 }
+
+export function initEmail() {
+
+}

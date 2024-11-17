@@ -18,14 +18,15 @@
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  @apply bg-rich_black-300;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-rich_black;
+  @apply bg-oxford_blue-400;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-oxford_blue-400;
+  @apply bg-oxford_blue-500;
 }

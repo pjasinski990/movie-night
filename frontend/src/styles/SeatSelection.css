@@ -15,7 +15,7 @@
 }
 
 .seat.unavailable {
-    @apply bg-gray-800 opacity-100 text-white border-none cursor-default;
+    @apply bg-gray-500 opacity-100 text-white border-none cursor-default;
 }
 
 .seat.selected {

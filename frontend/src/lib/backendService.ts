@@ -78,11 +78,16 @@ export const fetchSeats = async (showtimeId: number): Promise<Seat[]> => {
         });
 };
 
-export const bookSeats = async (buyerName: string, buyerEmail: string, seatIds: number[]): Promise<Booking[]> => {
-    let res = await fetch('/api/bookings/book', {
+export const bookSeats = async (buyerEmail: string, seatIds: number[]): Promise<Booking[]> => {
+    const res = await fetch('/api/bookings/book', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ buyerName, buyerEmail, seatIds }),
+        body: JSON.stringify({buyerEmail, seatIds}),
     });
+
+    if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData?.message || 'Unknown error occurred');
+    }
     return await res.json();
-}
+};

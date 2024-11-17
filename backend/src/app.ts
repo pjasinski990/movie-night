@@ -4,8 +4,11 @@ import { showtimeRoutes } from './routes/showtimeRoutes';
 import { uploadRoutes } from "./routes/uploadRoutes";
 import path from "path";
 import { seatRoutes } from "./routes/seatRoutes";
+import assert from "node:assert";
 
-export const app = express();
+validateEnvironment()
+
+export const app = express()
 
 app.use(express.json());
 
@@ -14,3 +17,12 @@ app.use('/api/showtimes', showtimeRoutes);
 app.use('/api/bookings', seatRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/uploads', express.static(path.join(__dirname, './uploads')));
+
+function validateEnvironment() {
+    assert(process.env.MYSQL_USER)
+    assert(process.env.MYSQL_PASSWORD)
+    assert(process.env.MYSQL_DATABASE)
+
+    assert(process.env.SENDGRID_API_KEY)
+    assert(process.env.EMAIL_FROM)
+}

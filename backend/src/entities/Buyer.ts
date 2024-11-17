@@ -6,9 +6,6 @@ export class Buyer {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Column()
-    name!: string;
-
     @Column({ nullable: true })
     email!: string;
 

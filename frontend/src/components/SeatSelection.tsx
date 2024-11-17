@@ -10,7 +10,6 @@ interface SeatSelectionProps {
 
 export const SeatSelection: React.FC<SeatSelectionProps> = ({ showtimeId }) => {
     const [selectedSeats, setSelectedSeats] = useState<number[]>([]);
-    const [buyerName, setBuyerName] = useState('');
     const [buyerEmail, setBuyerEmail] = useState('');
     const [seats, setSeats] = useState<Seat[]>([]);
 
@@ -27,34 +26,32 @@ export const SeatSelection: React.FC<SeatSelectionProps> = ({ showtimeId }) => {
     };
 
     const applyBookingToSeat = (booking: Booking) => {
-        const takenSeat = seats.find(seat => seat.id === booking.seat.id)
-        if (!takenSeat) {
-            throw new Error(`Invalid booking ${booking} for available seats ${seats}`)
-        }
+        setSeats(prevSeats => {
+            const takenSeat = prevSeats.find(seat => seat.id === booking.seat.id);
+            if (!takenSeat) {
+                throw new Error(`Invalid booking ${booking} for available seats ${prevSeats}`);
+            }
 
-        const updatedSeat = {...takenSeat, booking: booking};
-        setSeats(seats.map(seat =>
-            seat.id === updatedSeat.id ? updatedSeat : seat
-        ));
-    }
+            const updatedSeat = { ...takenSeat, booking: booking };
+            return prevSeats.map(seat =>
+                seat.id === updatedSeat.id ? updatedSeat : seat
+            );
+        });
+    };
 
     const handleConfirmSeats = async () => {
-        if (!buyerName) {
-            toast.error('Name is required')
-            return
-        } else if (!buyerEmail) {
+        if (!buyerEmail) {
             toast.error('Email is required')
             return
         }
 
         try {
-            const bookings = await bookSeats(buyerName, buyerEmail, selectedSeats);
+            const bookings = await bookSeats(buyerEmail, selectedSeats);
             for (const booking of bookings) {
                 toast.success(`Successfully booked seat ${booking.seat.label}`);
             }
 
             setSelectedSeats([])
-            setBuyerName('')
             setBuyerEmail('')
             for (const booking of bookings) {
                 applyBookingToSeat(booking);
@@ -90,15 +87,11 @@ export const SeatSelection: React.FC<SeatSelectionProps> = ({ showtimeId }) => {
             </div>
             <div className={'flex flex-col items-center w-64 mt-[-12px]'}>
                 <input
-                    className={'seat-form-input mb-2'}
-                    placeholder={'Your name'}
-                    value={buyerName}
-                    onChange={(e) => setBuyerName(e.target.value)}
-                />
-                <input
                     className={'seat-form-input mb-4'}
                     placeholder={'Your email'}
+                    name='email'
                     inputMode={'email'}
+                    autoComplete={'email'}
                     value={buyerEmail}
                     onChange={(e) => setBuyerEmail(e.target.value)}
                 />
