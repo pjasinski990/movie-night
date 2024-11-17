@@ -19,10 +19,12 @@ app.use('/api/upload', uploadRoutes);
 app.use('/uploads', express.static(path.join(__dirname, './uploads')));
 
 function validateEnvironment() {
+    assert(process.env.MYSQL_HOST)
     assert(process.env.MYSQL_USER)
     assert(process.env.MYSQL_PASSWORD)
     assert(process.env.MYSQL_DATABASE)
 
     assert(process.env.SENDGRID_API_KEY)
     assert(process.env.EMAIL_FROM)
+    assert(process.env.EMAIL_NOTIFICATION_TO)
 }

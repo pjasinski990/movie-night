@@ -7,7 +7,7 @@ import { In } from 'typeorm';
 import { createRouteErrorResponse } from "../util";
 import { EmailService } from "../tickets/emailService";
 import { generateMovieTicketEmail } from "../tickets/emailTicketGenerator";
-import { qrCode } from "../../resources/qr-code";
+import { qrCode } from "../resources/qr-code";
 import Attachment from "@sendgrid/helpers/classes/attachment";
 
 export const createBooking = async (req: Request, res: Response) => {
@@ -83,7 +83,7 @@ export const createBooking = async (req: Request, res: Response) => {
                 <ul>
                     ${bookings.map(booking => `
                         <li>
-                            <strong>${booking.showtime.movie}</strong> @ ${new Date(booking.showtime.show_date).toLocaleTimeString()}, 
+                            <strong>${booking.showtime.movie.title}</strong> @ ${new Date(booking.showtime.show_date).toLocaleDateString()}, 
                             Seat: ${booking.seat.label}
                         </li>
                     `).join('')}
@@ -94,7 +94,7 @@ export const createBooking = async (req: Request, res: Response) => {
                 process.env.NOTIFICATION_EMAIL_TO,
                 '[MOVIE NIGHT] Someone just bought a ticket',
                 `User ${buyerEmail} just bought tickets for \n${bookings.map(booking => {
-                    return `${booking.showtime.movie.title} @ ${new Date(booking.showtime.show_date).toLocaleTimeString()}, seat: ${booking.seat.label}`;
+                    return `${booking.showtime.movie.title} @ ${new Date(booking.showtime.show_date).toLocaleDateString()}, seat: ${booking.seat.label}`;
                 }).join('\n')}`,
                 htmlContent
             );

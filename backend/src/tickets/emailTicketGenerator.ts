@@ -14,7 +14,7 @@ export function generateMovieTicketEmail(
     <title>Tickets</title>
 </head>
 <body style="margin: 0; padding: 0;">
-    <table style="width: 100%; background-color: #001225; color: white; font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border-radius: 5px; overflow: hidden;">
+    <table style="width: 100%; background-color: #001225; color: white; font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; border-radius: 5px; overflow: hidden;">
         <tr>
             <td style="background-color: #00050c; color: #fff7ce; padding: 10px; text-align: center;">
                 <h1 style="margin: 0;">Your Movie Tickets</h1>
@@ -50,7 +50,7 @@ export function generateMovieTicketEmail(
         })
         .join('')}
         <tr>
-            <td style="text-align: center; padding: 10px; background-color: #001225; color: #fff7ce;">
+            <td style="text-align: center; padding: 10px; background-color: #001225;">
                 <small style="color: #001831;">꩜꩜꩜꩜꩜꩜꩜꩜꩜꩜꩜꩜꩜</small>
             </td>
         </tr>
