@@ -90,38 +90,40 @@ export const ShowtimeForm: React.FC<{ movies: Movie[] }> = ({ movies }) => {
                 className={`transition-all duration-300 ease-in-out overflow-hidden ${folded ? 'max-h-0 opacity-0' : 'max-h-screen opacity-100'}`}
             >
                 <div className="p-4 pt-0 flex flex-col space-y-8">
-                    <div className="h-[382px]">
-                        <div className="flex flex-row items-stretch space-x-3 h-full">
-                            <div className="flex-1 h-full">
-                                <Calendar
-                                    onChange={(value) => {
-                                        if (Array.isArray(value)) {
-                                            setDateTime(value[0]);
-                                        } else {
-                                            setDateTime(value);
-                                        }
-                                    }}
-                                    selectRange={false}
-                                    value={dateTime}
-                                    className="showtime-form-calendar w-full mt-2"
-                                    minDate={new Date()}
-                                />
-                                <TimePicker
-                                    onChange={(value) => {
-                                        if (Array.isArray(value)) {
-                                            handleTimeChange(value[0])
-                                        } else {
-                                            handleTimeChange(value)
-                                        }
-                                    }}
-                                    value={time}
-                                    format={'HH:mm'}
-                                    disableClock={true}
-                                    locale={navigator.language}
-                                    className="showtime-form-time-picker w-full mt-4 text-xl"
-                                />
+                    <div className="md:h-[382px]">
+                        <div className="flex flex-col-reverse md:flex-row items-stretch space-x-3 h-full">
+                            <div className={'flex flex-col items-center'}>
+                                <div className="flex flex-col items-center w-fit">
+                                    <Calendar
+                                        onChange={(value) => {
+                                            if (Array.isArray(value)) {
+                                                setDateTime(value[0]);
+                                            } else {
+                                                setDateTime(value);
+                                            }
+                                        }}
+                                        selectRange={false}
+                                        value={dateTime}
+                                        className="showtime-form-calendar w-full mt-2"
+                                        minDate={new Date()}
+                                    />
+                                    <TimePicker
+                                        onChange={(value) => {
+                                            if (Array.isArray(value)) {
+                                                handleTimeChange(value[0])
+                                            } else {
+                                                handleTimeChange(value)
+                                            }
+                                        }}
+                                        value={time}
+                                        format={'HH:mm'}
+                                        disableClock={true}
+                                        locale={navigator.language}
+                                        className="showtime-form-time-picker w-full mt-4 text-xl"
+                                    />
+                                </div>
                             </div>
-                            <div className="mt-2 flex-grow h-full">
+                            <div className="mt-2 mb-3 md:mb-0 flex-grow h-[350px] md:h-full">
                                 <MovieSelector movies={movies} selectedMovie={movie} setMovie={setMovie} />
                             </div>
                         </div>

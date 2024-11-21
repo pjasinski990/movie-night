@@ -49,7 +49,7 @@ export const ShowtimeCard: React.FC<ShowtimeCardProps> = ({ showtime }) => {
         <div className={'showtime-card cursor-pointer'}>
             <div className={'flex flex-row p-4 justify-between items-center'} onClick={() => setIsSelectingSeats(!isSelectingSeats)}>
                 <div className={'flex-col'}>
-                    <h2 className={'text-2xl font-semibold'}>{showtime.movie.title}</h2>
+                    <h2 className={'text-xl sm:text-2xl font-semibold'}>{showtime.movie.title}</h2>
                     <p className={'text-l font-semibold'}>{formattedTime}</p>
                 </div>
                 <button
