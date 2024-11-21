@@ -12,16 +12,16 @@ export class Movie {
     @Column()
     title!: string;
 
-    @Column({nullable: true})
+    @Column({ length: 1024, nullable: true })
     description!: string;
 
-    @Column({nullable: true})
+    @Column({ length: 1024, nullable: true })
     sellMeThisMovie!: string;
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     duration!: number;
 
-    @Column({ nullable: true })
+    @Column({ length: 2083, nullable: true })
     posterUrl!: string;
 
     @OneToMany(() => Showtime, (showtime) => showtime.movie)
