@@ -5,6 +5,7 @@ export interface Movie {
     title?: string;
     year?: number;
     description?: string;
+    sellMeThisMovie?: string;
     duration?: number;
     posterUrl?: string;
     showtimes?: Showtime[]

@@ -16,6 +16,9 @@ export class Movie {
     description!: string;
 
     @Column({nullable: true})
+    sellMeThisMovie!: string;
+
+    @Column({nullable: true})
     duration!: number;
 
     @Column({ nullable: true })

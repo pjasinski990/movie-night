@@ -20,6 +20,7 @@ export const MovieForm: React.FC = () => {
     const [title, setTitle] = useState('');
     const [year, setYear] = useState('');
     const [description, setDescription] = useState('');
+    const [sellMeThisMovie, setSellMeThisMovie] = useState('');
     const [duration, setDuration] = useState('');
     const [posterUrl, setPosterUrl] = useState('');
     const [folded, setFolded] = useState(true);
@@ -66,6 +67,7 @@ export const MovieForm: React.FC = () => {
         setTitle('');
         setYear('');
         setDescription('');
+        setSellMeThisMovie('');
         setDuration('');
         setPosterUrl('');
     };
@@ -123,13 +125,6 @@ export const MovieForm: React.FC = () => {
                                 }}
                                 className="app-form-input w-full mt-2"
                             />
-                            <textarea
-                                placeholder="Description"
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
-                                className="app-form-input w-full mt-2"
-                                rows={2}
-                            />
                             <input
                                 type="text"
                                 placeholder="Duration (minutes)"
@@ -147,7 +142,7 @@ export const MovieForm: React.FC = () => {
                         </div>
                         <div
                             {...getRootProps()}
-                            className="m-4 p-2 dropzone movie-form-dropzone max-w-[20%]"
+                            className="m-4 p-2 dropzone movie-form-dropzone min-w-28"
                         >
                             <input {...getInputProps()} />
                             {posterUrl ? (
@@ -161,12 +156,27 @@ export const MovieForm: React.FC = () => {
                             )}
                         </div>
                     </div>
+                    <textarea
+                        placeholder="Description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        className="app-form-input w-full mt-2"
+                        rows={2}
+                    />
+                    <textarea
+                        placeholder="Sell me this movie!"
+                        value={sellMeThisMovie}
+                        onChange={(e) => setSellMeThisMovie(e.target.value)}
+                        className="app-form-input w-full mt-2"
+                        rows={2}
+                    />
                     <button
                         onClick={() => {
                             const newMovie: Movie = {
                                 title,
                                 year: year ? parseInt(year, 10) : undefined,
                                 description,
+                                sellMeThisMovie,
                                 duration: duration ? parseInt(duration, 10) : undefined,
                                 posterUrl,
                             };
