@@ -6,7 +6,6 @@ import * as fs from "node:fs";
 import path from "path";
 import * as https from "node:https";
 import cors from 'cors';
-import express from "express";
 
 dotenv.config();
 
@@ -23,7 +22,6 @@ async function run() {
 
 async function runServer() {
     try {
-        app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
         app.listen(PORT, () => {
             console.log(`Http server is running on port ${PORT}`);
         });

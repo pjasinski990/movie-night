@@ -77,7 +77,7 @@ export const createBooking = async (req: Request, res: Response) => {
             })]
         );
 
-        if (process.env.NOTIFICATION_EMAIL_TO) {
+        if (process.env.EMAIL_NOTIFICATION_TO) {
             const htmlContent = `
                 <p>User <strong>${buyerEmail}</strong> just bought tickets for:</p>
                 <ul>
@@ -91,7 +91,7 @@ export const createBooking = async (req: Request, res: Response) => {
             `;
 
             await EmailService.getInstance().sendEmail(
-                process.env.NOTIFICATION_EMAIL_TO,
+                process.env.EMAIL_NOTIFICATION_TO,
                 '[MOVIE NIGHT] Someone just bought a ticket',
                 `User ${buyerEmail} just bought tickets for \n${bookings.map(booking => {
                     return `${booking.showtime.movie.title} @ ${new Date(booking.showtime.show_date).toLocaleDateString()}, seat: ${booking.seat.label}`;
