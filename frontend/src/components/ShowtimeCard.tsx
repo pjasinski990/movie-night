@@ -47,17 +47,25 @@ export const ShowtimeCard: React.FC<ShowtimeCardProps> = ({ showtime }) => {
 
     return (
         <div className={'showtime-card cursor-pointer'}>
-            <div className={'flex flex-row p-4 justify-between items-center'} onClick={() => setIsSelectingSeats(!isSelectingSeats)}>
-                <div className={'flex-col'}>
-                    <h2 className={'text-xl sm:text-2xl font-semibold'}>{showtime.movie.title}</h2>
-                    <p className={'text-l font-semibold'}>{formattedTime}</p>
+            <div
+                className="flex flex-row p-4 justify-between items-center"
+                onClick={() => setIsSelectingSeats(!isSelectingSeats)}
+            >
+                <div className="flex flex-col flex-1">
+                    <h2 className="text-xl sm:text-2xl font-semibold whitespace-normal break-words">
+                        {showtime.movie.title}
+                    </h2>
+                    <p className="text-l font-semibold">{formattedTime}</p>
                 </div>
-                <button
-                    className={'select-button'}
-                >
-                    <div className={'flex flex-row'}>
-                        Select Seats
-                        <ChevronDown className={`ml-2 w-10 transition-transform duration-300 ${isSelectingSeats ? 'rotate-180' : ''}`}/>
+                <button className="select-button ml-4">
+                    <div
+                        className="flex flex-row items-center">
+                        <span>Select Seats</span>
+                        <ChevronDown
+                            className={`ml-2 w-10 transition-transform duration-300 ${
+                                isSelectingSeats ? 'rotate-180' : ''
+                            }`}
+                        />
                         <button
                             className="showtime-delete-button"
                             onClick={(e) => {
@@ -77,7 +85,7 @@ export const ShowtimeCard: React.FC<ShowtimeCardProps> = ({ showtime }) => {
                     isSelectingSeats ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
                 }`}
             >
-                <SeatSelection showtimeId={showtime.id} />
+                <SeatSelection showtimeId={showtime.id}/>
             </div>
             <ConfirmDialog
                 open={!!deletingShowtimeId}
