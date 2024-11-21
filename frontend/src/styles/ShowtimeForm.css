@@ -31,7 +31,7 @@
     }
 
     .react-calendar__tile--active {
-        @apply enabled:bg-gold font-bold text-rich_black !important;
+        @apply enabled:bg-gold enabled:hover:bg-gold font-bold text-rich_black !important;
     }
 
     .react-calendar__tile--now {

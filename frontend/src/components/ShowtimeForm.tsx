@@ -123,7 +123,7 @@ export const ShowtimeForm: React.FC<{ movies: Movie[] }> = ({ movies }) => {
                                     />
                                 </div>
                             </div>
-                            <div className="mt-2 mb-3 md:mb-0 flex-grow h-[350px] md:h-full">
+                            <div className="mt-2 mb-3 md:mb-0 flex-grow max-h-[320px] overflow-auto md:h-full">
                                 <MovieSelector movies={movies} selectedMovie={movie} setMovie={setMovie} />
                             </div>
                         </div>
