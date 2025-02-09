@@ -44,7 +44,7 @@ const Showtimes: React.FC<{ showtimes: Showtime[] }> = ({ showtimes }) => {
 
     if (Object.keys(dailyRepertoires).length === 0) {
         return (
-            <p className={'text-white ml-2'}>No showtimes available.</p>
+            <p className={'text-white ml-2'}>Doesn't look like anything to me.</p>
         )
     }
 

@@ -40,12 +40,14 @@ const Movies: React.FC = () => {
         <div className={'flex flex-col'}>
             <h1 className="self-center text-3xl font-bold underline mb-6">Showing</h1>
             {isLoading ? (
-                <p className={'text-white'}>Loading movies...</p>
+                <p className="text-white">Loading movies...</p>
+            ) : !movies || movies.length == 0 ? (
+                <p className="text-white">Doesn't look like anything to me.</p>
             ) : (
                 <ul className="flex flex-col gap-6">
                     {movies.map((movie) => (
                         <li key={movie.id} className="w-full">
-                            <MovieCard movie={movie} onDelete={(id) => setDeletingMovieId(id)}/>
+                            <MovieCard movie={movie} onDelete={(id) => setDeletingMovieId(id)} />
                         </li>
                     ))}
                 </ul>
