@@ -1,9 +1,10 @@
 version: '3.8'
 services:
-  movie_night_frontend:
+  movie-night-frontend:
     build:
       context: ./frontend
       dockerfile: ${DOCKERFILE:-Dockerfile.dev}
+    image: movie-night-frontend
     ports:
       - "81:80"
       - "444:443"
@@ -15,49 +16,50 @@ services:
       - ./frontend:/app
       - /app/node_modules
     depends_on:
-      - movie_night_backend
+      - movie-night-backend
     networks:
       - movie-night-network
 
-  movie_night_backend:
+  movie-night-backend:
     build:
       context: ./backend
       dockerfile: ${DOCKERFILE:-Dockerfile.dev}
+    image: movie-night-backend
     ports:
       - "5000:5000"
     environment:
       - NODE_ENV=${ENV:-development}
       - PORT=5000
-      - MYSQL_HOST=movie_night_mysql
-      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_HOST=movie-night-mysql
+      - MYSQL_USER=movie_night_user
+      - MYSQL_DATABASE=movie_night_db
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
       - SENDGRID_API_KEY=${SENDGRID_API_KEY}
-      - EMAIL_FROM=${EMAIL_FROM}
+      - EMAIL_FROM=automation@hexd.space
       - EMAIL_NOTIFICATION_TO=${EMAIL_NOTIFICATION_TO}
     volumes:
       - ./backend:/app
       - /app/node_modules
     depends_on:
-      movie_night_mysql:
+      movie-night-mysql:
         condition: service_healthy
     networks:
       - movie-night-network
 
-  movie_night_mysql:
+  movie-night-mysql:
     image: mysql:8.0
-    container_name: movie_night_mysql
+    container_name: movie-night-mysql
     ports:
       - "3306:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_USER=movie_night_user
+      - MYSQL_DATABASE=movie_night_db
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "movie_night_mysql", "-u${MYSQL_USER}", "-p${MYSQL_PASSWORD}"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "movie-night-mysql", "-u${MYSQL_USER}", "-p${MYSQL_PASSWORD}"]
       timeout: 20s
       retries: 10
     networks:
