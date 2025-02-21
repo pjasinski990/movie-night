@@ -6,11 +6,11 @@ export default defineConfig({
     server: {
         proxy: {
             '/api': {
-                target: 'http://movie_night_backend:5000',
+                target: 'http://movie-night-backend:5000',
                 changeOrigin: true,
             },
             '/uploads': {
-                target: 'http://movie_night_backend:5000',
+                target: 'http://movie-night-backend:5000',
                 changeOrigin: true,
             },
         },
