@@ -8,7 +8,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 export const AppDataSource = new DataSource({
     type: 'mysql',
     port: 3306,
-    host: process.env.MYSQL_HOST || 'movie_night_backend',
+    host: process.env.MYSQL_HOST || 'movie-night-mysql',
     username: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,
