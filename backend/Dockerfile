@@ -6,8 +6,6 @@ RUN npm install
 
 COPY . .
 RUN mkdir -p ./dist/uploads
-RUN mkdir -p ./dist/certs
-COPY ./certs ./dist/certs
 
 RUN npm run build
 
