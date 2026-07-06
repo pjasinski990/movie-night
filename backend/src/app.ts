@@ -24,7 +24,10 @@ function validateEnvironment() {
     assert(process.env.MYSQL_PASSWORD)
     assert(process.env.MYSQL_DATABASE)
 
-    assert(process.env.SENDGRID_API_KEY)
+    assert(process.env.SMTP_HOST)
+    assert(process.env.SMTP_PORT)
+    assert(process.env.SMTP_USER)
+    assert(process.env.SMTP_PASS)
     assert(process.env.EMAIL_FROM)
     assert(process.env.EMAIL_NOTIFICATION_TO)
 }

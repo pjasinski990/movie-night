@@ -8,7 +8,6 @@ import { createRouteErrorResponse } from "../util";
 import { EmailService } from "../tickets/emailService";
 import { generateMovieTicketEmail } from "../tickets/emailTicketGenerator";
 import { qrCode } from "../resources/qr-code";
-import Attachment from "@sendgrid/helpers/classes/attachment";
 
 export const createBooking = async (req: Request, res: Response) => {
     try {
@@ -68,13 +67,14 @@ export const createBooking = async (req: Request, res: Response) => {
             '[MOVIE NIGHT] Your tickets',
             plainText,
             html,
-            [new Attachment({
+            [{
                 content: qrCode,
+                encoding: 'base64',
                 filename: 'qr-code.png',
-                type: 'image/png',
-                disposition: 'inline',
-                contentId: qrCodeCID
-            })]
+                contentType: 'image/png',
+                contentDisposition: 'inline',
+                cid: qrCodeCID
+            }]
         );
 
         if (process.env.EMAIL_NOTIFICATION_TO) {

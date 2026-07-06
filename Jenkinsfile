@@ -38,7 +38,8 @@ pipeline {
                     sh """
                         export MYSQL_PASSWORD=${MOVIE_NIGHT_MYSQL_PASSWORD}
                         export MYSQL_ROOT_PASSWORD=${MOVIE_NIGHT_MYSQL_ROOT_PASSWORD}
-                        export SENDGRID_API_KEY=${SENDGRID_API_KEY}
+                        export MAILERSEND_SMTP_USER=${MAILERSEND_SMTP_USER}
+                        export MAILERSEND_SMTP_PASS=${MAILERSEND_SMTP_PASS}
                         export EMAIL_NOTIFICATION_TO=${PRIVATE_EMAIL_ADDRESS}
                         make prod
                     """
@@ -103,7 +104,8 @@ pipeline {
                                 && export BACKEND_TAG_NAME=${BACKEND_TAG_NAME} \
                                 && export MOVIE_NIGHT_MYSQL_PASSWORD=${MOVIE_NIGHT_MYSQL_PASSWORD} \
                                 && export MOVIE_NIGHT_MYSQL_ROOT_PASSWORD=${MOVIE_NIGHT_MYSQL_ROOT_PASSWORD} \
-                                && export SENDGRID_API_KEY=${SENDGRID_API_KEY} \
+                                && export MAILERSEND_SMTP_USER=${MAILERSEND_SMTP_USER} \
+                                && export MAILERSEND_SMTP_PASS=${MAILERSEND_SMTP_PASS} \
                                 && export PRIVATE_EMAIL_ADDRESS=${PRIVATE_EMAIL_ADDRESS} \
                                 && docker-compose pull \
                                 && docker-compose down && docker image prune -f && docker-compose up -d

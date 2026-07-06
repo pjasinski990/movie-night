@@ -24,7 +24,10 @@ services:
       - MYSQL_USER=movie_night_user
       - MYSQL_DATABASE=movie_night_db
       - MYSQL_PASSWORD=${MOVIE_NIGHT_MYSQL_PASSWORD}
-      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
+      - SMTP_HOST=smtp.mailersend.net
+      - SMTP_PORT=587
+      - SMTP_USER=${MAILERSEND_SMTP_USER}
+      - SMTP_PASS=${MAILERSEND_SMTP_PASS}
       - EMAIL_FROM=automation@hexd.space
       - EMAIL_NOTIFICATION_TO=${PRIVATE_EMAIL_ADDRESS}
     depends_on:
